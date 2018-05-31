@@ -1,15 +1,4 @@
 function getTime(){
-    function getWords(n, word){
-       var words={
-        "h":[" час ", " часа ", " часов "],
-        "m":[" минута ", " минуты ", " минут "],
-        "s":[" секунда ", " секунды ", " секунд "]
-        }
-        if (n%10===1 && n%100!==111) return words[word][0];
-        if((n%10===2 || n%10===3 || n%10===4) && !(n%100===12 ||n%100===13 ||n%100===14)) return words[word][1];
-        return words[word][2];
-        }
-
     var res="";
     var t1=+process.argv[2];
     var t2=+process.argv[3];
@@ -29,4 +18,15 @@ function getTime(){
     }
     return res;
 }
+
+function getWords(n, word){
+    var words={
+     "h":[" час ", " часа ", " часов "],
+     "m":[" минута ", " минуты ", " минут "],
+     "s":[" секунда ", " секунды ", " секунд "]
+     }
+     if (n%10===1 && n%100!==111) return words[word][0];
+     if((n%10===2 || n%10===3 || n%10===4) && !(n%100===12 ||n%100===13 ||n%100===14)) return words[word][1];
+     return words[word][2];
+     }
 process.stdout.write(getTime().trim());
