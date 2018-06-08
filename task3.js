@@ -1,32 +1,31 @@
+var worlds={
+    "h":[" час ", " часа ", " часов "],
+    "m":[" минута ", " минуты ", " минут "],
+    "s":[" секунда ", " секунды ", " секунд "]
+ }
 function getTime(){
     var res="";
     var t1=+process.argv[2];
     var t2=+process.argv[3];
-    var sum=t1+t2;
-    if(sum>=3600){
-        let hours=Math.floor(sum/3600);
-        res+=hours + getWords(hours, "h");
-        sum-=hours*3600;
+    var timeSum=t1+t2;
+    if(timeSum>=3600){
+        let hours=Math.floor(timeSum/3600);
+        res+=hours + GetWorlds(hours, worlds["h"]);
+        timeSum-=hours*3600;
     } 
-    if(sum>=60){
-        let minutes=Math.floor(sum/60);
-        res+= minutes + getWords(minutes, "m");
-        sum-=minutes*60;
+    if(timeSum>=60){
+        let minutes=Math.floor(timeSum/60);
+        res+= minutes + GetWorlds(minutes, worlds["m"]);
+        timeSum-=minutes*60;
     }
-    if(sum>0){
-        res+= sum + getWords(sum, "s");
+    if(timeSum>0){
+        res+= timeSum + GetWorlds(timeSum, worlds["s"]);
     }
     return res;
 }
 
-function getWords(n, word){
-    var words={
-     "h":[" час ", " часа ", " часов "],
-     "m":[" минута ", " минуты ", " минут "],
-     "s":[" секунда ", " секунды ", " секунд "]
-     }
-     if (n%10===1 && n%100!==111) return words[word][0];
-     if((n%10===2 || n%10===3 || n%10===4) && !(n%100===12 ||n%100===13 ||n%100===14)) return words[word][1];
-     return words[word][2];
-     }
+ function GetWorlds(number, wordsArray){
+    var  cases = [2, 0, 1, 1, 1, 2];  
+    return wordsArray[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];  
+}
 process.stdout.write(getTime().trim());
